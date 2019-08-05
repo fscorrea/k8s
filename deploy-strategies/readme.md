@@ -1,1 +1,0 @@
-### Estrategias de Despliegue
