@@ -1,0 +1,33 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fruit-ramped
+  labels:
+    app: fruit-ramped
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: fruit-ramped
+    spec:
+      containers:
+      - name: fruit-ramped
+        image: hashicorp/http-echo
+        args:
+          - "-text=apple"
+        ports:
+        - containerPort: 5678
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: fruit-service-ramped
+spec:
+  type: LoadBalancer
+  selector:
+    app: fruit-ramped
+  ports:
+    - port: 5678 # Default port for image

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fruit-ramped
+  labels:
+    app: fruit-ramped
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # how many pods we can add at a time
+      maxUnavailable: 0  # maxUnavailable define how many pods can be unavailable
+                          # during the rolling update
+  selector:
+    matchLabels:
+      app: fruit-ramped
+  
+  template:
+    metadata:
+      labels:
+        app: fruit-ramped
+    spec:
+      containers:
+      - name: fruit-ramped
+        image: hashicorp/http-echo
+        args:
+          - "-text=banana"
+        ports:
+        - containerPort: 5678

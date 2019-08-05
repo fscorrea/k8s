@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fruit-canary-v2
+  labels:
+    app: fruit-canary
+spec:
+  replicas: 1
+  
+  selector:
+    matchLabels:
+      app: fruit-canary
+  
+  template:
+    metadata:
+      labels:
+        app: fruit-canary
+    spec:
+      containers:
+      - name: fruit-canary
+        image: hashicorp/http-echo
+        args:
+          - "-text=banana"
+        ports:
+        - containerPort: 5678
