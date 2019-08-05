@@ -1,4 +1,4 @@
-##Ramped
+###Ramped
 kubectl apply -f app-v1.yaml
 
 watch -n 1 kubectl get pod
@@ -9,7 +9,7 @@ kubectl apply -f app-v2.yaml
 kubectl rollout undo deploy my-app
 kubectl delete deployment fruit-ramped-v1
 
-##Canary
+###Canary
 kubectl apply -f app-v1.yaml
 
 watch -n 1 kubectl get pod
@@ -20,7 +20,7 @@ kubectl apply -f app-v2.yaml
 kubectl scale --replicas=5 deploy fruit-canary-v2
 kubectl delete deploy fruit-canary-v1
 
-##Blue-Green
+###Blue-Green
 kubectl apply -f app-v1.yaml
 
 watch -n 1 kubectl get pod
