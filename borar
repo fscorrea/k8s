@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: satrack-map
+  namespace: platform
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: satrack-map
+    spec:
+      containers:
+      - name: satrack-map
+        image: testregistrocontenedores.azurecr.io/map-component-ui:10248
+        resources:
+          requests:
+            cpu: 3m
+            memory: 150Mi            
+          limits:
+             cpu: 5m    
+             memory: 200Mi	
+      imagePullSecrets:
+      - name: registrosatrack
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: satrack-map
+  namespace: platform
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: satrack-map
