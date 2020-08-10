@@ -28,7 +28,7 @@
          effect: NoSchedule
        containers:
        - name: fluentd
-         image: testregistrocontenedores.azurecr.io/satrack-fluentd-debian-kafka-ds:0.12.7          
+         image: acrsatrack.azurecr.io/satrack-fluentd-debian-kafka-ds:0.12.7          
          env:
            - name:  FLUENT_KAFKA_BROKERS
              value: "192.9.201.110:9092,192.9.201.111:9092,172.16.33.2:9092"
