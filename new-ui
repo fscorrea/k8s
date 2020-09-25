@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: new-web-portal-ui
+  namespace: platform
+spec:
+  replicas: 9
+  selector:
+    matchLabels:
+      app: new-web-portal-ui
+  template:
+    metadata:
+      labels:
+        app: new-web-portal-ui
+    spec:
+      containers:
+      - name: new-web-portal-ui
+        image: acrsatrack.azurecr.io/new-web-portal-ui:0.5.28
+        imagePullPolicy: Always		
+        resources:
+          requests:
+            cpu: 30m
+            memory: 50Mi
+          limits:
+            cpu: 60m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
+        env:
+          - name: KEYENVIROMENT
+            value: prod
+          - name: SITEVERSION
+            value: 0.5.28
+          - name: ALARMMANAGERUI
+            value: http://alarmmanagerui.satrack.com/main-es2015.js
+          - name: GEOFENCESASSIGNMENT
+            value: http://geofencesstorage.blob.core.windows.net/geofences-assignment-ui/main-es2015.js
+          - name: ALARMCONFIGURATION
+            value: http://alarmconfigurationui.satrack.com/main.js
+      imagePullSecrets:
+      - name: registrosatrack
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: new-web-portal-ui
+  namespace: platform
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: new-web-portal-ui
