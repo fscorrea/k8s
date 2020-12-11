@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argos-integration
+  namespace: applications
+spec:
+  replicas: 
+  selector:
+      matchLabels:
+        app: argos-integration
+  template:
+    metadata:
+      labels:
+        app: argos-integration
+    spec:
+      containers:
+      - name: argos-integration
+        image: testregistrocontenedores.azurecr.io/argos-integration:0.1.9
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Test" 
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi            
+      imagePullSecrets:
+      - name: registrosatrack  
